@@ -8,9 +8,9 @@ const TrayningType = require('../../models/trainingTypeModel');
 // @access   public
 router.get('/', async (req, res) => {
   try {
-    console.log('trainingTypes');
     const trainingTypes = await TrayningType.find();
-    console.log(trainingTypes);
+    console.log('commit?');
+
     res.json(trainingTypes);
   } catch (error) {
     console.error(error.message);
