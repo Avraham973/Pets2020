@@ -9,7 +9,6 @@ const TrayningType = require('../../models/trainingTypeModel');
 router.get('/', async (req, res) => {
   try {
     const trainingTypes = await TrayningType.find();
-    console.log('commit?');
 
     res.json(trainingTypes);
   } catch (error) {
