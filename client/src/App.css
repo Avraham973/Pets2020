@@ -44,7 +44,6 @@
   text-align: right;
 }
 
-.slick-prev:before,
-.slick-next:before {
-  color: green;
+.slick-slide {
+  height: fit-content;
 }

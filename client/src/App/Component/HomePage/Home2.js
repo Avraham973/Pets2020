@@ -3,7 +3,8 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import Carousel from "../SharedCompnent/Carousel";
+import Carousel from "../SharedComponent/Carousel";
+import MultiCarousel from "../SharedComponent/MultiCarousel2";
 import { AboutMe } from "./AboutMe";
 import ReviewCard from "../Cards/ReviewCard";
 import { getAboutMe, getFacebookReviews } from "../../Action/home";
@@ -19,7 +20,8 @@ function Home({ getAboutMe, aboutMe, getFacebookReviews }) {
       <br /> <br />
       <Carousel />
       <AboutMe aboutMe={aboutMe} />
-      <ReviewCard />
+      <MultiCarousel />
+      {/* <ReviewCard /> */}
     </Fragment>
   );
 }

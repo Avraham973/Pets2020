@@ -10,7 +10,7 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 // Component
-import ContactUs from "../SharedCompnent/ContactUs";
+import ContactUs from "../SharedComponent/ContactUs";
 
 function Copyright() {
   return (

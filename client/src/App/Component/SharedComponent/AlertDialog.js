@@ -22,7 +22,7 @@ const useStyle = makeStyles({
   },
 });
 
-export function AlertDialog(props) {
+export default function AlertDialog(props) {
   const classes = useStyle();
   const [open, setOpen] = React.useState(false);
 

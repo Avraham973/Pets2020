@@ -1,12 +1,16 @@
 /** @format */
 
 import React, { Fragment } from "react";
-import { AlertDialog } from "../SharedCompnent/AlertDialog";
+import AlertDialog from "../SharedComponent/AlertDialog";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, Typography, Fab, Divider } from "@material-ui/core";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import Moment from "react-moment";
+// import moment from "moment";
 
 const useStyle = makeStyles({
   card: {
+    display: "inline-block",
     textAlign: "center",
     maxWidth: "300px",
     margin: "auto",
@@ -17,26 +21,30 @@ const useStyle = makeStyles({
   },
   text: {
     textAlign: "left",
+    // minHeight: "120px",
+  },
+  icon: {
+    color: "#27ae60",
+    display: "grid",
+    position: "fixed",
   },
 });
-export default () => {
+export default (props) => {
   const classes = useStyle();
   return (
     <Fragment>
       <Card className={classes.card}>
         {/* <CardMedia className='media' image={props.img} /> */}
         <CardContent>
+          <FacebookIcon className={classes.icon} />
           <Typography
             className={"MuiTypography--heading"}
             variant={"h6"}
             gutterBottom>
-            {/* {props.heading} */}
-            כותרת
+            <Moment format='DD/MM/YYYY'>{props.date}</Moment>
           </Typography>
           <Typography className={classes.text} variant={"caption"}>
-            {/* {props.description} */}
-            We are going to learn different kinds of species in nature that live
-            together to form amazing environment.
+            {props.text && props.text.substring(0, 150) + "..."}
           </Typography>
           <Divider className='divider' light style={{ margin: "24px 0" }} />
           <Fab
@@ -50,7 +58,7 @@ export default () => {
             <AlertDialog
               className='alertbox'
               dialogHeading='ביקורת'
-              dialogContent='בעבודה שלנו יחד נלמד כי כלב שמתרגל לטיפול מסור וסדר יום קבוע, יהפוך לכלב מאוזן, וכמו שאני תמיד אומר, כלב מאוזן הוא כלב מאושר! אנא אל תהססו להתקשר בכדי להתחיל בתהליך'
+              dialogContent={props.text}
             />
           </Fab>
         </CardContent>
