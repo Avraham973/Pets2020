@@ -9,7 +9,7 @@ import "./App.css";
 import Routes from "../src/App/Component/Routing/Routes";
 // Component
 import Home from "./App/Component/HomePage/Home2";
-import Login from "./App/Component/Auth/Login2";
+// import Login from "./App/Component/Auth/Login2";
 import Navbar from "../src/App/Component/Layout/Navbar";
 import AppFooter from "./App/Component/Layout/Footer";
 import { TrainingServiceForm } from "./App/Component/TrainingService/TrainingServiceForm";
@@ -65,7 +65,7 @@ function App() {
                 <Switch>
                   <Route exact path='/' component={Home} />
                   <Route component={Routes} />
-                  <Route exact path='/login' component={Login} />
+                  {/* <Route exact path='/login' component={Login} /> */}
                   {/* <Route exact path='/form' component={TrainingServiceForm} /> */}
                 </Switch>
               </Fragment>

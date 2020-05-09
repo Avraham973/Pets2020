@@ -31,36 +31,51 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
   },
   title: {
-    fontFamily: "Calibri",
-    textAlign: "left",
+    // fontFamily: "Arial,Helvetica,sans-serif",
+    fontFamily: "serif",
+    textAlign: "center",
   },
   text: {
-    fontFamily: "Calibri",
+    fontFamily: "serif",
     textAlign: "justify",
-    paddingRight: "20%",
+    paddingRight: "25%",
+    paddingLeft: "25%",
     textAlignLast: "left",
+  },
+  hr: {
+    display: "block",
+    borderTop: "3px double #8c8b8b",
+    width: "50%",
+    marginBefore: "0.5em",
+    marginAfter: "0.5em",
+    marginStart: "auto",
+    marginEnd: "auto",
+    overflow: "hidden",
+    borderWidth: "3px",
   },
 }));
 
 export const AboutMe = (props) => {
   const { aboutMe } = props;
   const classes = useStyles();
-  //console.log(aboutMe);
 
   return (
     <Fragment>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
-          <Grid item style={{ paddingLeft: "6%" }}>
+          <Grid item style={{ paddingLeft: "10%" }}>
             <Avatar src={liran} className={classes.avatar} />
           </Grid>
           <Grid item xs={3} sm container>
             <Grid item xs={12} container direction='column' spacing={2}>
               <Grid item xs>
-                <Typography className={classes.title} gutterBottom variant='h3'>
-                  לירן בן צבי - מאלף כלבים
+                <Typography className={classes.title} gutterBottom variant='h2'>
+                  לירן בן צבי
                 </Typography>
-                <br />
+                <Typography className={classes.title} gutterBottom variant='h4'>
+                  מאלף כלבים
+                </Typography>
+                <hr className={classes.hr} />
                 <Typography
                   className={classes.text}
                   variant='body1'

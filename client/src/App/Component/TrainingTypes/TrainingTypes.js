@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { getTrainingTypes } from "../../Action/trainingTypes";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import pic from "../../Assets/Img/top1.jpg";
 import {
   Paper,
   Grid,
@@ -17,10 +18,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    flexGrow: 1,
-    direction: "rtl",
+    paddingTop: "1%",
   },
   paper: {
     textAlign: "center",
@@ -50,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const TrainingTypes = ({ getTrainingTypes, trainings }) => {
   const classes = useStyles();
-
+  const imgg = "../../Assets/Img/top1.jpg";
   useEffect(() => {
     getTrainingTypes();
   }, []);
@@ -61,9 +59,9 @@ const TrainingTypes = ({ getTrainingTypes, trainings }) => {
       <Grid container spacing={2}>
         {trainings.map((item) => (
           <Fragment>
-            <Grid xs item={false} key={item._id}>
+            <Grid xs item={true} key={item._id}>
               <Paper elevation={0} className={classes.paper}>
-                <Avatar className={classes.avatar} />
+                <Avatar src={imgg} className={classes.avatar} />
                 <Typography align='center' variant='h4'>
                   {item.title}
                   {item.key}

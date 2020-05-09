@@ -10,6 +10,7 @@ import {
   Toolbar,
   IconButton,
   makeStyles,
+  Typography,
   List,
   Drawer,
   ListItem,
@@ -17,20 +18,24 @@ import {
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  list: {
-    marginRight: theme.spacing(2),
-    direction: "rtl",
-    width: "250px",
+  root: {
+    flexGrow: 1,
   },
-  menuButton: {
+  menuIcon: {
     marginRight: theme.spacing(2),
-    paddingLeft: theme.spacing(5),
+  },
+  title: {
+    flexGrow: 1,
   },
   callBtn: {
     color: "white",
   },
-  link: {
-    textDecoration: "none",
+  list: {
+    marginRight: theme.spacing(2),
+    width: "250px",
+  },
+  button: {
+    color: "white",
   },
 }));
 
@@ -44,37 +49,38 @@ const Navbar = () => {
   };
   return (
     <Fragment>
-      <AppBar style={{ backgroundColor: "#27ae60", position: "fixed" }}>
+      <AppBar position='static' style={{ backgroundColor: "#1B5E20" }}>
         <Toolbar>
           <IconButton
             edge='start'
-            className={classes.menuButton}
+            className={classes.menuIcon}
+            onClick={onDrawerClicked}
             color='inherit'
-            aria-label='menu'
-            onClick={onDrawerClicked}>
+            aria-label='menu'>
             <PetsIcon />
           </IconButton>
-
+          <Typography variant='h6' className={classes.title}>
+            <Link className={classes.link} to='/register'>
+              <Button
+                to='/register'
+                primary='Register'
+                className={classes.root}
+                color='inherit'>
+                הרשמה
+              </Button>
+            </Link>
+          </Typography>
+          <Link className={classes.link} to='/'>
+            <Button variant='outlined' color='inherit'>
+              כשכשתא
+            </Button>
+          </Link>
           <Button
             className={classes.callBtn}
             variant='outlined'
             href='tel:0523845449'>
             צרו קשר - 0523845449
           </Button>
-          <Link className={classes.link} to='/'>
-            <Button variant='outlined' color='inherit'>
-              כשכשתא
-            </Button>
-          </Link>
-          <Link className={classes.link} to='/login'>
-            <Button
-              to='/login'
-              primary='Login'
-              className={classes.root}
-              color='inherit'>
-              התחבר
-            </Button>
-          </Link>
         </Toolbar>
       </AppBar>
       <Drawer open={drawerState} onClose={onDrawerClicked}>
@@ -84,6 +90,46 @@ const Navbar = () => {
       </Drawer>
     </Fragment>
   );
+  //   <Fragment>
+  //     <AppBar style={{ backgroundColor: "#27ae60", position: "fixed" }}>
+  //       <Toolbar>
+  //         <IconButton
+  //           edge='start'
+  //           className={classes.menuButton}
+  //           color='inherit'
+  //           aria-label='menu'
+  //           onClick={onDrawerClicked}>
+  //           <PetsIcon />
+  //         </IconButton>
+  //         <Button
+  //           className={classes.callBtn}
+  //           variant='outlined'
+  //           href='tel:0523845449'>
+  //           צרו קשר - 0523845449
+  //         </Button>
+  //         <Link className={classes.link} to='/'>
+  //           <Button variant='outlined' color='inherit'>
+  //             כשכשתא
+  //           </Button>
+  //         </Link>
+  //         <Link className={classes.link} to='/login'>
+  //           <Button
+  //             to='/login'
+  //             primary='Login'
+  //             className={classes.root}
+  //             color='inherit'>
+  //             התחבר
+  //           </Button>
+  //         </Link>
+  //       </Toolbar>
+  //     </AppBar>
+  //     <Drawer open={drawerState} onClose={onDrawerClicked}>
+  //       <List className={classes.list}>
+  //         <ListItem>סוגי אילוף</ListItem>
+  //       </List>
+  //     </Drawer>
+  //   </Fragment>
+  // );
 };
 
 export default Navbar;
