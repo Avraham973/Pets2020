@@ -15,17 +15,23 @@ const User = require('../../models/userModel');
 // @desc    Register User
 // @access  Public
 
-router.get('/', (req, res) => {
-  console.log('ive got the get for users route!!!');
-  res.status(200).send('you are amazing!!!');
-});
+// router.get('/', (req, res) => {
+//   console.log('ive got the get for users route!!!');
+//   res.status(200).send('you are amazing!!!');
+// });
 
 router.post(
   '/',
   [
-    check('name', ' שם הינו שדה חובה עם מינמום 2 תווים')
+    check('firstname', ' שם הינו שדה חובה עם מינמום 2 תווים')
       .notEmpty()
       .isLength({ min: 2, max: 20 }),
+    check('lastname', ' שם הינו שדה חובה עם מינמום 2 תווים')
+      .notEmpty()
+      .isLength({ min: 2, max: 20 }),
+    check('phone', ' טלפון הינו שדה חובה וחייב להכיל 10 מספרים בלבד')
+      .notEmpty()
+      .isLength({ min: 10, max: 10 }),
     check('email', 'אימייל הינו שדה חובה').isEmail(),
     check('password', 'הסיסמא חייבת להכיל לפחות 6 תווים').isLength({ min: 6 })
   ],
@@ -36,17 +42,21 @@ router.post(
       console.log(errors.array());
       return res.status(422).json({ errors: errors.array() });
     }
-    const { name, email, password } = req.body;
+    const { firstname, lastname, phone, email, password } = req.body;
     try {
+      console.log('See if the user exists');
       //See if the user exists
       let user = await User.findOne({ email });
 
       if (user) {
+        console.log('user already exsists');
         return res.status(400).json({ errors: [{ msg: 'User already exsist' }] });
       }
 
       user = new User({
-        name,
+        firstname,
+        lastname,
+        phone,
         email,
         password
       });

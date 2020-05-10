@@ -1,20 +1,27 @@
 /** @format */
 
-import React from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+import React, { useState, useReducer } from "react";
+
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import background from "../../Assets/Img/signupback.png";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  makeStyles,
+} from "@material-ui/core";
+import { register } from "../../Action/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,119 +50,169 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const onSubmit = async (e) => {
-  e.preventDefault();
-  console.log("clicked");
-  // window.alert(JSON.stringify(e));
-};
+const Register = ({ register }) => {
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-export default function SignUp() {
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    register({ firstname, lastname, email, phone, password });
+    console.log(formData);
+    // window.alert(JSON.stringify(e));
+  };
+  const onConfirm = () => {};
+
   const classes = useStyles();
 
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    phone: "",
+  });
+
+  const { firstname, lastname, email, phone, password } = formData;
+
   return (
-    <Container style={{ backgroundImage: `url(${background})` }}>
-      <Container
-        style={{ backgroundColor: "#fafafa" }}
-        component='main'
-        maxWidth='xs'>
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon color='#2c3e50' />
-          </Avatar>
-          <Typography component='h1' variant='h5'>
-            הרשמה לכשכשתא אילוף כלבים
-          </Typography>
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={(e) => onSubmit(e)}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete='fname'
-                  name='firstName'
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='firstName'
-                  label='שם פרטי'
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='lastName'
-                  label='שם משפחה'
-                  name='lastName'
-                  autoComplete='lname'
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='email'
-                  label='דואר אלקטרוני'
-                  name='email'
-                  autoComplete='email'
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant='outlined'
-                  required
-                  fullWidth
-                  id='phone'
-                  label='טלפון'
-                  name='phone'
-                  autoComplete='phone'
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant='outlined'
-                  required
-                  fullWidth
-                  name='password'
-                  label='סיסמא'
-                  type='password'
-                  id='password'
-                  autoComplete='current-password'
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value='allowExtraEmails' color='primary' />
-                  }
-                  label='I want to receive inspiration, marketing promotions and updates via email.'
-                />
-              </Grid>
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          הרשמה לכשכשתא אילוף כלבים
+        </Typography>
+        <ValidatorForm
+          className={classes.form}
+          noValidate
+          onSubmit={(e) => onSubmit(e)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                autoComplete='firstname'
+                value={firstname}
+                name='firstname'
+                variant='outlined'
+                required
+                fullWidth
+                id='firstname'
+                label='שם פרטי'
+                autoFocus
+                validators={[
+                  "required",
+                  "minStringLength:2",
+                  // "minStringLength:25",
+                ]}
+                errorMessages={[
+                  "שדה חובה",
+                  "יש להכניס בין 2-25 תווים",
+                  // "יש להכניס בין 2-25 תווים",
+                ]}
+              />
             </Grid>
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.submit}>
-              הרשמה
-            </Button>
-            <Grid container justify='flex-end'>
-              <Grid item>
-                <Link to='\' href='#' variant='body2'>
-                  משתמש רשום? לחץ כאן להתחברות
-                </Link>
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                value={lastname}
+                variant='outlined'
+                required
+                fullWidth
+                id='lastname'
+                label='שם משפחה'
+                name='lastname'
+                type='text'
+                autoComplete='lastname'
+                validators={[
+                  "required",
+                  "minStringLength:2",
+                  // "minStringLength:25",
+                ]}
+                errorMessages={[
+                  "שדה חובה",
+                  "יש להכניס בין 2-25 תווים",
+                  // "יש להכניס בין 2-25 תווים",
+                ]}
+              />
             </Grid>
-          </form>
-        </div>
-        <Box mt={5}>{/* <Copyright /> */}</Box>
-      </Container>
+            <Grid item xs={12}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                value={email}
+                variant='outlined'
+                required
+                fullWidth
+                id='email'
+                label='דואר אלקטרוני'
+                name='email'
+                autoComplete='email'
+                validators={["required", "isEmail"]}
+                errorMessages={["שדה חובה", 'יש להכניס כתובת דוא"ל תקינה']}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                value={phone}
+                variant='outlined'
+                required
+                fullWidth
+                id='phone'
+                label='טלפון'
+                name='phone'
+                autoComplete='phone'
+                validators={["required", "minStringLength:6"]}
+                errorMessages={["שדה חובה", "יש להכניס מספר בעל 10 ספרות"]}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                value={password}
+                variant='outlined'
+                required
+                fullWidth
+                name='password'
+                label='סיסמא'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+                validators={["required"]}
+                errorMessages={["שדה חובה"]}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value='allowExtraEmails' color='primary' />}
+                label='I want to receive inspiration, marketing promotions and updates via email.'
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}>
+            הרשמה
+          </Button>
+          <Grid container justify='flex-end'>
+            <Grid item>
+              <Link to='\' href='#' variant='body2'>
+                משתמש רשום? לחץ כאן להתחברות
+              </Link>
+            </Grid>
+          </Grid>
+        </ValidatorForm>
+      </div>
+      <Box mt={5}>{/* <Copyright /> */}</Box>
     </Container>
+    // </Container>
   );
-}
+};
+Register.propTypes = {
+  register: PropTypes.func.isRequired,
+};
+export default connect(null, { register })(Register);

@@ -1,9 +1,11 @@
 /** @format */
 
 require('dotenv-extended').load();
-
+require('dotenv').config({ path: __dirname + '/.env' });
+// console.log({ path: __dirname + '/.env' });
 const mongoose = require('mongoose');
 const { MONGO_URI } = process.env;
+// console.log(MONGO_URI);
 
 const connectDB = async () => {
   try {

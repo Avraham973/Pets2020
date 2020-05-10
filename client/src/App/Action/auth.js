@@ -5,18 +5,23 @@ import { REGISTER_SUCCESS, REGISTER_FAIL } from "./types";
 
 //Regester User
 
-export const register = ({ name, email, password, phone }) => async (
-  dispatch
-) => {
+export const register = ({
+  firstname,
+  lastname,
+  email,
+  phone,
+  password,
+}) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
   };
-  const body = JSON.stringify({ name, email, password, phone });
+  const body = JSON.stringify({ firstname, lastname, email, phone, password });
 
   try {
-    const response = await axios.post("api/users", body, config);
+    const response = await axios.post("/api/users", body, config);
 
     dispatch({
       type: REGISTER_SUCCESS,
