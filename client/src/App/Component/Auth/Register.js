@@ -1,12 +1,12 @@
 /** @format */
 
 import React, { useState, useReducer } from "react";
-
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import background from "../../Assets/Img/signupback.png";
+import { register } from "../../Action/auth";
 import {
   Avatar,
   Button,
@@ -21,7 +21,6 @@ import {
   Container,
   makeStyles,
 } from "@material-ui/core";
-import { register } from "../../Action/auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,17 +49,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({ register }) => {
+const Register = ({ register, showAlert }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
     register({ firstname, lastname, email, phone, password });
-    console.log(formData);
-    // window.alert(JSON.stringify(e));
   };
-  const onConfirm = () => {};
 
   const classes = useStyles();
 
@@ -209,7 +205,6 @@ const Register = ({ register }) => {
       </div>
       <Box mt={5}>{/* <Copyright /> */}</Box>
     </Container>
-    // </Container>
   );
 };
 Register.propTypes = {

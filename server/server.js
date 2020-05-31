@@ -15,9 +15,11 @@ app.use(express.json({ extended: false })); //used to get the body from the req
 
 app.get('/', (req, res) => res.send('API Running...'));
 
+const whiteList = [undefined, 'http://localhost:3000'];
+
 const corsOptions = {
   origin(origin, callback) {
-    if (origin === 'http://localhost:5000/') {
+    if (whiteList.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error(`Not allowed by CORS for origin: ${origin}`));

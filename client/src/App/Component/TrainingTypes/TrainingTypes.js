@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getTrainingTypes } from "../../Action/trainingTypes";
 import { connect } from "react-redux";
@@ -13,7 +14,6 @@ import {
   Avatar,
   Typography,
   Button,
-  Link,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,8 +58,8 @@ const TrainingTypes = ({ getTrainingTypes, trainings }) => {
     <Container className={classes.root}>
       <Grid container spacing={2}>
         {trainings.map((item) => (
-          <Fragment>
-            <Grid xs item={true} key={item._id}>
+          <Fragment key={item._id}>
+            <Grid xs item={true}>
               <Paper elevation={0} className={classes.paper}>
                 <Avatar src={imgg} className={classes.avatar} />
                 <Typography align='center' variant='h4'>
@@ -69,6 +69,7 @@ const TrainingTypes = ({ getTrainingTypes, trainings }) => {
                 <Typography variant='body1' align='center' gutterBottom>
                   {item.text}
                 </Typography>
+                <Link to={`/trainingservice/${"123456"}`}> click me </Link>
                 <Button
                   className={classes.button}
                   variant='contained'
@@ -90,7 +91,7 @@ TrainingTypes.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  console.log("mapStateToProps", state.trainingTypes.trainingTypes);
+  //console.log("mapStateToProps", state.trainingTypes.trainingTypes);
   return {
     trainings: state.trainingTypes.trainingTypes,
   };

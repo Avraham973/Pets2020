@@ -2,6 +2,9 @@
 
 import axios from "axios";
 import { REGISTER_SUCCESS, REGISTER_FAIL } from "./types";
+import { showAlert } from "../Action/alert";
+import logo from "../Assets/Img/logoA.png";
+const BASE_URL = process.env.REACT_APP_NODE_ENV;
 
 //Regester User
 
@@ -15,23 +18,34 @@ export const register = ({
   const config = {
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
     },
   };
+
   const body = JSON.stringify({ firstname, lastname, email, phone, password });
 
   try {
-    const response = await axios.post("/api/users", body, config);
+    const response = await axios.post(`${BASE_URL}/api/users`, body, config);
 
-    dispatch({
-      type: REGISTER_SUCCESS,
-      payload: response.data,
-    });
+    const alert = {
+      type: "success",
+      title: "נרשמת ל-כשכשתא בהצלחה!",
+      content: "שמחים שהצטרפת אלינו",
+      showCancel: false,
+    };
+
+    dispatch(
+      {
+        type: REGISTER_SUCCESS,
+        payload: response.data,
+      },
+      showAlert(alert)
+    );
   } catch (error) {
-    //To add here error handling inorder to display the errors to user/
-
-    dispatch({
-      type: REGISTER_FAIL,
-    });
+    if (error) {
+      dispatch({
+        type: REGISTER_FAIL,
+      });
+      dispatch(showAlert(error.response.data));
+    }
   }
 };

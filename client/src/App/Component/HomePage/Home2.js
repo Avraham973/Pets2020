@@ -21,7 +21,7 @@ function Home({ getAboutMe, aboutMe, getFacebookReviews }) {
       <Carousel />
       <AboutMe aboutMe={aboutMe} />
       <TrainingTypes />
-      <MultiCarousel />
+      {/* <MultiCarousel /> */}
       {/* <ReviewCard /> */}
     </Fragment>
   );

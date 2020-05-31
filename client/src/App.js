@@ -4,7 +4,10 @@ import React, { useState, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core";
-
+import { getVisibleAlert } from "./App/Reducers/alert";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import SweetAlert from "react-bootstrap-sweetalert";
 import "./App.css";
 import Routes from "../src/App/Component/Routing/Routes";
 // Component
@@ -45,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   direction: "rtl",
 }));
 
-function App() {
+const App = ({ visibleAlert }) => {
   const classes = useStyles();
   console.log(process.env.FACEBOOK_TOKEN);
   const [drawerState, setDrawerState] = useState(false);
@@ -55,28 +58,38 @@ function App() {
   };
 
   return (
-    <Provider store={store}>
-      <Router>
-        <ThemeProvider theme={theme}>
-          <RTL>
-            <div dir='rtl'>
-              <Fragment>
-                <Navbar stickyHeader={true} />
-                <Switch>
-                  <Route exact path='/' component={Home} />
-                  <Route component={Routes} />
-                  {/* <Route exact path='/login' component={Login} /> */}
-                  {/* <Route exact path='/form' component={TrainingServiceForm} /> */}
-                </Switch>
-              </Fragment>
-
-              {/* <AppFooter /> */}
-            </div>
-          </RTL>
-        </ThemeProvider>
-      </Router>
-    </Provider>
+    // <Provider store={store}>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <RTL>
+          <div dir='rtl'>
+            <Fragment>
+              <Navbar stickyHeader={true} />
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route component={Routes} />
+                {/* <Route exact path='/login' component={Login} /> */}
+                {/* <Route exact path='/form' component={TrainingServiceForm} /> */}
+              </Switch>
+            </Fragment>
+            {visibleAlert && (
+              <SweetAlert {...visibleAlert}>{visibleAlert.content}</SweetAlert>
+            )}
+            {/* <AppFooter /> */}
+          </div>
+        </RTL>
+      </ThemeProvider>
+    </Router>
+    // </Provider>
   );
-}
+};
 
-export default App;
+App.propTypes = {
+  visibleAlert: PropTypes.any,
+};
+
+const mapStateToProps = (state) => ({
+  visibleAlert: getVisibleAlert(state.alert),
+});
+
+export default connect(mapStateToProps, {})(App);

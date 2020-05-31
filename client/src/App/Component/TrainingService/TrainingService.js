@@ -1,7 +1,13 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 
-export const TrainingService = () => {
-  return <div>hi</div>;
+const TrainingService = (match) => {
+  const data = null;
+  useEffect(() => {
+    data = match;
+  }, []);
+  return <div>{data}</div>;
 };
+
+export default TrainingService;

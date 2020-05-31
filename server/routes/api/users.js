@@ -11,15 +11,14 @@ const { JWT_SECRET } = process.env;
 var jwt = require('jsonwebtoken');
 const User = require('../../models/userModel');
 
+router.get('/', (req, res) => {
+  console.log('ive got the get for users route!!!');
+  res.status(200).send('you are amazing!!!');
+});
+
 // @route   POST api/user
 // @desc    Register User
 // @access  Public
-
-// router.get('/', (req, res) => {
-//   console.log('ive got the get for users route!!!');
-//   res.status(200).send('you are amazing!!!');
-// });
-
 router.post(
   '/',
   [
@@ -44,13 +43,14 @@ router.post(
     }
     const { firstname, lastname, phone, email, password } = req.body;
     try {
-      console.log('See if the user exists');
       //See if the user exists
-      let user = await User.findOne({ email });
-
+      let user = await User.findOne({
+        $or: [{ email }, { phone }]
+      });
       if (user) {
-        console.log('user already exsists');
-        return res.status(400).json({ errors: [{ msg: 'User already exsist' }] });
+        return res
+          .status(400)
+          .json({ type: 'info', title: 'משתמש קיים במערכת', content: 'באפשרותך לשחזר את הסיסמסא' });
       }
 
       user = new User({
@@ -78,7 +78,11 @@ router.post(
       });
     } catch (error) {
       console.log(error.message);
-      res.status(500).send('Server error');
+      res.status(500).json({
+        type: 'danger',
+        title: 'אופס',
+        content: 'משהו השתבש, אנו ממליצים לנסות שוב בקרוב'
+      });
     }
   }
 );

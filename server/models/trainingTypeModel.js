@@ -15,6 +15,14 @@ const TrainingTypeSchema = new Schema({
   img: {
     data: Buffer,
     contentType: String
+  },
+  clickecount: {
+    type: Number,
+    default: 0
+  },
+  trainingservice: {
+    type: Schema.Types.ObjectId,
+    ref: 'trainingservice'
   }
 });
 
