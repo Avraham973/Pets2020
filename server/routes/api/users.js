@@ -38,10 +38,15 @@ router.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      console.log(errors.array());
-      return res.status(422).json({ errors: errors.array() });
+      return res.status(422).json({
+        type: 'danger',
+        title: 'יש לתקן את השגיאות הבאות',
+        content: errors.array().map(err => err.msg)
+      });
     }
+
     const { firstname, lastname, phone, email, password } = req.body;
+
     try {
       //See if the user exists
       let user = await User.findOne({
@@ -50,7 +55,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ type: 'info', title: 'משתמש קיים במערכת', content: 'באפשרותך לשחזר את הסיסמסא' });
+          .json({ type: 'info', title: 'משתמש קיים במערכת', content: 'באפשרותך לשחזר את הסיסמא' });
       }
 
       user = new User({

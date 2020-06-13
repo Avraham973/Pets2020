@@ -2,7 +2,11 @@
 
 import React, { useState, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import {
+  createMuiTheme,
+  ThemeProvider,
+  responsiveFontSizes,
+} from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core";
 import { getVisibleAlert } from "./App/Reducers/alert";
 import { connect } from "react-redux";
@@ -14,13 +18,13 @@ import Routes from "../src/App/Component/Routing/Routes";
 import Home from "./App/Component/HomePage/Home2";
 // import Login from "./App/Component/Auth/Login2";
 import Navbar from "../src/App/Component/Layout/Navbar";
-import AppFooter from "./App/Component/Layout/Footer";
+import Footer from "./App/Component/Layout/Footer";
 import { TrainingServiceForm } from "./App/Component/TrainingService/TrainingServiceForm";
 
 //RTL
 import { create } from "jss";
 import rtl from "jss-rtl";
-import { StylesProvider, jssPreset } from "@material-ui/core/styles";
+import { StylesProvider, jssPreset, useTheme } from "@material-ui/core/styles";
 
 //Redux
 import { Provider } from "react-redux";
@@ -33,8 +37,8 @@ function RTL(props) {
   return <StylesProvider jss={jss}>{props.children}</StylesProvider>;
 }
 
-const theme = createMuiTheme({
-  direction: "rtl", // Both here and <body dir="rtl">
+let theme = createMuiTheme({
+  direction: "rtl",
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = ({ visibleAlert }) => {
   const classes = useStyles();
+
   console.log(process.env.FACEBOOK_TOKEN);
   const [drawerState, setDrawerState] = useState(false);
 
@@ -75,7 +80,8 @@ const App = ({ visibleAlert }) => {
             {visibleAlert && (
               <SweetAlert {...visibleAlert}>{visibleAlert.content}</SweetAlert>
             )}
-            {/* <AppFooter /> */}
+
+            <Footer />
           </div>
         </RTL>
       </ThemeProvider>

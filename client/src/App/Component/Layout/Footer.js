@@ -16,10 +16,7 @@ function Copyright() {
   return (
     <React.Fragment>
       {"© "}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Tal Avraham
-      </Link>{" "}
-      {new Date().getFullYear()}
+      Tal Avraham {new Date().getFullYear()}
     </React.Fragment>
   );
 }
@@ -30,7 +27,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   direction: "rtl",
   root: {
-    backgroundColor: "#27ae60",
+    backgroundColor: "#C8E6C9",
     direction: "rtl",
     display: "flex",
   },
@@ -52,10 +49,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#2c3e50",
+    // backgroundColor: "#2c3e50",
     marginRight: theme.spacing(1),
     "&:hover": {
-      backgroundColor: theme.palette.warning.dark,
+      backgroundColor: theme.palette.warning.light,
     },
   },
   list: {
@@ -74,11 +71,11 @@ export default function AppFooter() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div dir='rtl'>
+      <div dir='ltr'>
         <Typography component='footer' className={classes.root}>
           <Container className={classes.container}>
-            <Grid container spacing={5}>
-              <Grid item xs={6} sm={4} md={3}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Grid
                   container
                   direction='column'
@@ -86,13 +83,15 @@ export default function AppFooter() {
                   className={classes.iconsWrapper}
                   spacing={2}>
                   <Grid item className={classes.icons}>
-                    <a href='https://www.facebook.com/kishkashta.dog.training'>
+                    <a
+                      target='_blank'
+                      href='https://www.facebook.com/kishkashta.dog.training'>
                       <FacebookIcon fontSize='large' />
                     </a>
                     <a
-                      href='https://twitter.com/MaterialUI'
-                      className={classes.icon}>
-                      <InstagramIcon />
+                      target='_blank'
+                      href='https://www.instagram.com/kishkashta.dog.training/'>
+                      <InstagramIcon fontSize='large' titleAccess='instegram' />
                     </a>
                   </Grid>
                   <Grid item>
@@ -100,10 +99,10 @@ export default function AppFooter() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={6} sm={4} md={2}></Grid>
-              <Grid item xs={6} sm={8} md={4}></Grid>
+              <Grid item xs={1} sm={2} md={3}>
+                <ContactUs />
+              </Grid>
             </Grid>
-            <ContactUs />
           </Container>
         </Typography>
       </div>

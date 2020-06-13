@@ -28,6 +28,7 @@ const corsOptions = {
 };
 
 //Define Routes
+app.use('/api/lead', cors(corsOptions), require('./routes/api/lead'));
 app.use('/api/users', cors(corsOptions), require('./routes/api/users'));
 app.use('/api/auth', cors(corsOptions), require('./routes/api/auth'));
 app.use('/api/trainingtypes', cors(corsOptions), require('./routes/api/trainigType'));

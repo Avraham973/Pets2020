@@ -1,99 +1,146 @@
 /** @format */
 
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { addLead } from "../../Action/user";
+import { Redirect, Link } from "react-router-dom";
 
-import FormControl from "@material-ui/core/FormControl";
-
-import { OutlinedInput, Button, InputLabel, Grid } from "@material-ui/core";
+import {
+  Container,
+  Typography,
+  CssBaseline,
+  makeStyles,
+  Grid,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Avatar,
+} from "@material-ui/core";
+import Logo from "../../Assets/Img/logoA.png";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: "inherit",
-    },
-    display: "inline-block",
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
   },
-  inputLabel: {
-    backgroundColor: "white",
-  },
-  grid: {
+  paper: {
+    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
   },
-  button: {
-    backgroundColor: "#2c3e50",
-    color: "white",
+  submit: {
+    backgroundColor: "#34495e",
+    "&:hover": {
+      backgroundColor: "#2980b9",
+    },
+    margin: theme.spacing(3, 0, 2),
   },
 }));
 
-export default function ComposedTextField() {
-  const classes = useStyles();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const { email, password } = formData;
-
-  //   const [formData, setFormData] = useState({
-  //     email: "",
-  //     password: "",
-  //     phone: "",
-  //   });
-  //   const { name, email, phone } = formData;
-
+const ContactUs = ({ addLead }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("set action ", formData);
+    setIsSubmitted(true);
+    addLead(fName, phone, email);
   };
 
+  ValidatorForm.addValidationRule("isPhoneNO", (value) => {
+    if (value.match(/\d/g) && value.length === 10) {
+      return true;
+    }
+    return false;
+  });
+
+  const classes = useStyles();
+  const [formData, setFormData] = useState({
+    fName: "",
+    phone: "",
+    email: "",
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { fName, phone, email } = formData;
+
   return (
-    <form
-      dir='rtl'
-      className={classes.root}
-      noValidate
-      autoComplete='off'
-      onSubmit={(e) => onSubmit(e)}>
-      <Grid className={classes.grid}>
-        <FormControl variant='outlined'>
-          <InputLabel htmlFor='component-outlined'>שם מלא</InputLabel>
-          <OutlinedInput
-            id='component-outlined'
-            value={formData.name}
-            onChange={(e) => onChange(e)}
-            label='שם מלא'
-          />
-        </FormControl>
-        <FormControl variant='outlined'>
-          <InputLabel htmlFor='component-outlined'>אימייל</InputLabel>
-          <OutlinedInput
-            id='component-outlined'
-            value={email}
-            onChange={(e) => onChange(e)}
-            label='email'
-          />
-        </FormControl>
-        <FormControl variant='outlined'>
-          <InputLabel htmlFor='component-outlined'>טלפון</InputLabel>
-          <OutlinedInput
-            id='component-outlined'
-            value={formData.name}
-            onChange={(e) => onChange(e)}
-            label='שם מלא'
-          />
-        </FormControl>
-        <Button
-          type='submit'
-          variant='contained'
-          className={classes.button}
-          onClick={(e) => onSubmit(e)}>
-          שלח
-        </Button>
-      </Grid>
-    </form>
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component='h1' variant='h5'>
+          ?רוצה שנחזור אליך
+        </Typography>
+        <ValidatorForm
+          className={classes.form}
+          noValidate
+          onSubmit={(e) => onSubmit(e)}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                value={fName}
+                variant='outlined'
+                required
+                fullWidth
+                id='fName'
+                label='שם מלא'
+                name='fName'
+                autoComplete='fullname'
+                validators={["required", "minStringLength:2"]}
+                errorMessages={["שדה חובה", "יש להכניס בין 2-25 תווים"]}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                value={phone}
+                variant='outlined'
+                required
+                fullWidth
+                id='phone'
+                label='טלפון'
+                name='phone'
+                autoComplete='phone'
+                validators={["required", "isPhoneNO"]}
+                errorMessages={["שדה חובה", "יש להכניס מספר בעל 10 ספרות"]}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextValidator
+                onChange={(e) => onChange(e)}
+                value={email}
+                variant='outlined'
+                required
+                fullWidth
+                id='email'
+                label='דואר אלקטרוני'
+                name='email'
+                autoComplete='email'
+                validators={["required", "isEmail"]}
+                errorMessages={["שדה חובה", 'יש להכניס כתובת דוא"ל תקינה']}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            disabled={isSubmitted}
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}>
+            שלח
+          </Button>
+        </ValidatorForm>
+      </div>
+    </Container>
   );
-}
+};
+
+ContactUs.propType = {
+  addLead: PropTypes.func.isRequired,
+};
+
+export default connect(null, { addLead })(ContactUs);

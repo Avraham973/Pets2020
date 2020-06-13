@@ -13,7 +13,6 @@ const removeAlert = (id) => ({
 });
 
 export const showAlert = (alertProps, timeout = 5000) => (dispatch) => {
-  console.log("show alert");
   if (!alertProps.id) {
     alertProps.id = uuidv4();
   }

@@ -1,6 +1,7 @@
 /** @format */
 
 import React, { Fragment, useState, useEffect } from "react";
+import TrainingCard from "../Cards/TrainingCard";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getTrainingTypes } from "../../Action/trainingTypes";
@@ -19,6 +20,7 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: "1%",
+    flexGrow: 1,
   },
   paper: {
     textAlign: "center",
@@ -55,33 +57,16 @@ const TrainingTypes = ({ getTrainingTypes, trainings }) => {
   //console.log("data", trainings.trainingTypes);
 
   return (
-    <Container className={classes.root}>
-      <Grid container spacing={2}>
-        {trainings.map((item) => (
-          <Fragment key={item._id}>
-            <Grid xs item={true}>
-              <Paper elevation={0} className={classes.paper}>
-                <Avatar src={imgg} className={classes.avatar} />
-                <Typography align='center' variant='h4'>
-                  {item.title}
-                  {item.key}
-                </Typography>
-                <Typography variant='body1' align='center' gutterBottom>
-                  {item.text}
-                </Typography>
-                <Link to={`/trainingservice/${"123456"}`}> click me </Link>
-                <Button
-                  className={classes.button}
-                  variant='contained'
-                  color='secondary'>
-                  קרא עוד...
-                </Button>
-              </Paper>
-            </Grid>
-          </Fragment>
-        ))}
-      </Grid>
-    </Container>
+    <Grid
+      container
+      // style={{ maxWidth: 1410, margin: "auto" }}
+      alignItems='stretch'>
+      {trainings.map((trainingItem) => (
+        <Grid item md={3} sm={12} style={{ display: "flex" }}>
+          <TrainingCard trainingItem={trainingItem} />
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 

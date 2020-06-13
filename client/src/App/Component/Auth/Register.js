@@ -3,6 +3,7 @@
 import React, { useState, useReducer } from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import background from "../../Assets/Img/signupback.png";
@@ -14,7 +15,6 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
-  Link,
   Grid,
   Box,
   Typography,
@@ -23,9 +23,9 @@ import {
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundImage: background,
-  },
+  // root: {
+  //   backgroundImage: background,
+  // },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -57,6 +57,13 @@ const Register = ({ register, showAlert }) => {
     e.preventDefault();
     register({ firstname, lastname, email, phone, password });
   };
+
+  ValidatorForm.addValidationRule("isPhoneNO", (value) => {
+    if (value.match(/\d/g) && value.length === 10) {
+      return true;
+    }
+    return false;
+  });
 
   const classes = useStyles();
 
@@ -97,16 +104,8 @@ const Register = ({ register, showAlert }) => {
                 id='firstname'
                 label='שם פרטי'
                 autoFocus
-                validators={[
-                  "required",
-                  "minStringLength:2",
-                  // "minStringLength:25",
-                ]}
-                errorMessages={[
-                  "שדה חובה",
-                  "יש להכניס בין 2-25 תווים",
-                  // "יש להכניס בין 2-25 תווים",
-                ]}
+                validators={["required", "minStringLength:2"]}
+                errorMessages={["שדה חובה", "יש להכניס בין 2-25 תווים"]}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -121,16 +120,8 @@ const Register = ({ register, showAlert }) => {
                 name='lastname'
                 type='text'
                 autoComplete='lastname'
-                validators={[
-                  "required",
-                  "minStringLength:2",
-                  // "minStringLength:25",
-                ]}
-                errorMessages={[
-                  "שדה חובה",
-                  "יש להכניס בין 2-25 תווים",
-                  // "יש להכניס בין 2-25 תווים",
-                ]}
+                validators={["required", "minStringLength:2"]}
+                errorMessages={["שדה חובה", "יש להכניס בין 2-25 תווים"]}
               />
             </Grid>
             <Grid item xs={12}>
@@ -159,7 +150,7 @@ const Register = ({ register, showAlert }) => {
                 label='טלפון'
                 name='phone'
                 autoComplete='phone'
-                validators={["required", "minStringLength:6"]}
+                validators={["required", "isPhoneNO"]}
                 errorMessages={["שדה חובה", "יש להכניס מספר בעל 10 ספרות"]}
               />
             </Grid>
@@ -175,8 +166,8 @@ const Register = ({ register, showAlert }) => {
                 type='password'
                 id='password'
                 autoComplete='current-password'
-                validators={["required"]}
-                errorMessages={["שדה חובה"]}
+                validators={["required", "minStringLength:6"]}
+                errorMessages={["שדה חובה", "הסיסמא חייבת להכיל לפחות 6 תווים"]}
               />
             </Grid>
             <Grid item xs={12}>
@@ -194,9 +185,9 @@ const Register = ({ register, showAlert }) => {
             className={classes.submit}>
             הרשמה
           </Button>
-          <Grid container justify='flex-end'>
+          <Grid container justify='flex-start'>
             <Grid item>
-              <Link to='\' href='#' variant='body2'>
+              <Link to='/login' variant='body2'>
                 משתמש רשום? לחץ כאן להתחברות
               </Link>
             </Grid>

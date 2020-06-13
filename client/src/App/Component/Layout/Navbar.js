@@ -49,7 +49,7 @@ const Navbar = () => {
   };
   return (
     <Fragment>
-      <AppBar position='static' style={{ backgroundColor: "#1B5E20" }}>
+      <AppBar position='sticky' style={{ backgroundColor: "#1B5E20" }}>
         <Toolbar>
           <IconButton
             edge='start'
