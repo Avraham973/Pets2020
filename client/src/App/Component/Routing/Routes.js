@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import Register from "../Auth/Register";
 import Login from "../Auth/Login";
 import Home from "../HomePage/Home2";
+import Leads from "../Leads/leads";
 import TrainingService from "../TrainingService/TrainingService";
 
 const Routes = (props) => {
@@ -16,6 +17,7 @@ const Routes = (props) => {
         <Route exact path='/' component={Home} />
         <Route exa path='/trainingservice' component={TrainingService} />
         <Route exa path='/login' component={Login} />
+        <Route exa path='/leads' component={Leads} />
       </Switch>
     </section>
   );

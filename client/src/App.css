@@ -43,7 +43,13 @@
   width: 106px;
   text-align: right;
 }
-
+/* 
 .slick-slide {
-  height: fit-content;
+  height: 200px;
 }
+
+.sample {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+} */

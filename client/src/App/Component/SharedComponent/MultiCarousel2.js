@@ -15,7 +15,7 @@ var settings = {
   dots: true,
   infinite: true,
   autoplaySpeed: 4000,
-  autoplay: true,
+  autoplay: false,
   speed: 500,
   slidesToShow: 4,
   slidesToScroll: 1,
@@ -106,8 +106,8 @@ export default function MultipleItems(props) {
   }
 
   return (
-    <Fragment>
+    <div style={{ height: "fit-content" }}>
       <Slider {...settings}>{sliders()}</Slider>
-    </Fragment>
+    </div>
   );
 }

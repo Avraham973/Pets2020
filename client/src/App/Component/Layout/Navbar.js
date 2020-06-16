@@ -48,7 +48,7 @@ const Navbar = () => {
     setDrawerState(!drawerState);
   };
   return (
-    <Fragment>
+    <div className={classes.root}>
       <AppBar position='sticky' style={{ backgroundColor: "#1B5E20" }}>
         <Toolbar>
           <IconButton
@@ -88,7 +88,7 @@ const Navbar = () => {
           <ListItem>סוגי אילוף</ListItem>
         </List>
       </Drawer>
-    </Fragment>
+    </div>
   );
   //   <Fragment>
   //     <AppBar style={{ backgroundColor: "#27ae60", position: "fixed" }}>

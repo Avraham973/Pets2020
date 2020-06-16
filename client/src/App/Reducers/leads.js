@@ -1,19 +1,18 @@
 /** @format */
 
-import { ADD_LEAD } from "../Action/types";
-import { Switch } from "@material-ui/core";
+import { GET_LEAD } from "../Action/types";
 
 const initialState = {
-  lead: null,
+  leads: null,
   loading: true,
 };
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case ADD_LEAD:
+    case GET_LEAD:
       return {
         ...state,
-        ...payload,
+        leads: payload,
         loading: false,
       };
 

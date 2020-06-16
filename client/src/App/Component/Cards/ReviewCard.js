@@ -10,7 +10,6 @@ import Moment from "react-moment";
 
 const useStyle = makeStyles({
   card: {
-    display: "inline-block",
     textAlign: "center",
     maxWidth: "300px",
     margin: "auto",

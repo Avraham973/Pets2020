@@ -1,8 +1,8 @@
 /** @format */
 
 import axios from "axios";
-import { ADD_LEAD } from "./types";
-import { showAlert } from "../Action/alert";
+import { GET_LEAD } from "./types";
+import { showAlert } from "./alert";
 
 const BASE_URL = process.env.REACT_APP_NODE_ENV;
 
@@ -25,16 +25,24 @@ export const addLead = (fName, phone, email) => async (dispatch) => {
       showCancel: true,
     };
 
-    // dispatch({
-    //   type: ADD_LEAD,
-    //   payload: response.data,
-    // });
     dispatch(showAlert(alert));
   } catch (error) {
     if (error) {
-      //   dispatch({
-      //     type: REGISTER_FAIL,
-      //   });
+      dispatch(showAlert(error.response.data, 36000));
+    }
+  }
+};
+
+export const getAllLeads = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/lead`);
+
+    dispatch({
+      type: GET_LEAD,
+      payload: response.data,
+    });
+  } catch (error) {
+    if (error) {
       dispatch(showAlert(error.response.data, 36000));
     }
   }

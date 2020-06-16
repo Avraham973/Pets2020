@@ -29,14 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     // margin: "1%",
-    width: theme.spacing(20),
+    width: theme.spacing(15),
     ["@media (max-width:700px)"]: {
-      width: "150px",
-      height: "150px",
+      width: "100px",
+      height: "100px",
     },
-    height: theme.spacing(20),
+    height: theme.spacing(15),
     margin: "auto",
-    display: "block",
   },
   button: {
     display: "flex",
@@ -62,7 +61,12 @@ const TrainingTypes = ({ getTrainingTypes, trainings }) => {
       // style={{ maxWidth: 1410, margin: "auto" }}
       alignItems='stretch'>
       {trainings.map((trainingItem) => (
-        <Grid item md={3} sm={12} style={{ display: "flex" }}>
+        <Grid
+          key={trainingItem._id}
+          item
+          md={3}
+          sm={12}
+          style={{ display: "flex" }}>
           <TrainingCard trainingItem={trainingItem} />
         </Grid>
       ))}

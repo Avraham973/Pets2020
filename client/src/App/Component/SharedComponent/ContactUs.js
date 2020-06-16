@@ -1,11 +1,12 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addLead } from "../../Action/user";
+import { addLead } from "../../Action/leads";
 import { Redirect, Link } from "react-router-dom";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 import {
   Container,
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   paper: {
-    marginTop: theme.spacing(8),
+    margin: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -52,6 +53,7 @@ const ContactUs = ({ addLead }) => {
 
   ValidatorForm.addValidationRule("isPhoneNO", (value) => {
     if (value.match(/\d/g) && value.length === 10) {
+      console.log(value.match(/\d/g));
       return true;
     }
     return false;
@@ -67,75 +69,78 @@ const ContactUs = ({ addLead }) => {
   const { fName, phone, email } = formData;
 
   return (
-    <Container component='main' maxWidth='xs'>
+    // <Container component='main' maxWidth='xs'>
+    <Fragment>
       <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component='h1' variant='h5'>
-          ?רוצה שנחזור אליך
-        </Typography>
-        <ValidatorForm
-          className={classes.form}
-          noValidate
-          onSubmit={(e) => onSubmit(e)}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <TextValidator
-                onChange={(e) => onChange(e)}
-                value={fName}
-                variant='outlined'
-                required
-                fullWidth
-                id='fName'
-                label='שם מלא'
-                name='fName'
-                autoComplete='fullname'
-                validators={["required", "minStringLength:2"]}
-                errorMessages={["שדה חובה", "יש להכניס בין 2-25 תווים"]}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextValidator
-                onChange={(e) => onChange(e)}
-                value={phone}
-                variant='outlined'
-                required
-                fullWidth
-                id='phone'
-                label='טלפון'
-                name='phone'
-                autoComplete='phone'
-                validators={["required", "isPhoneNO"]}
-                errorMessages={["שדה חובה", "יש להכניס מספר בעל 10 ספרות"]}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextValidator
-                onChange={(e) => onChange(e)}
-                value={email}
-                variant='outlined'
-                required
-                fullWidth
-                id='email'
-                label='דואר אלקטרוני'
-                name='email'
-                autoComplete='email'
-                validators={["required", "isEmail"]}
-                errorMessages={["שדה חובה", 'יש להכניס כתובת דוא"ל תקינה']}
-              />
-            </Grid>
+      <Typography component='h1' variant='h5'>
+        <Avatar src={Logo}>
+          <LockOutlinedIcon />
+        </Avatar>
+        ?רוצה שנחזור אליך
+      </Typography>
+      <ValidatorForm
+        className={classes.form}
+        noValidate
+        onSubmit={(e) => onSubmit(e)}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <TextValidator
+              onChange={(e) => onChange(e)}
+              value={fName}
+              variant='outlined'
+              required
+              fullWidth
+              id='fName'
+              label='שם מלא'
+              name='fName'
+              autoComplete='fullname'
+              validators={["required", "minStringLength:2"]}
+              errorMessages={["שדה חובה", "יש להכניס בין 2-25 תווים"]}
+            />
           </Grid>
-          <Button
-            disabled={isSubmitted}
-            type='submit'
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}>
-            שלח
-          </Button>
-        </ValidatorForm>
-      </div>
-    </Container>
+          <Grid item xs={12}>
+            <TextValidator
+              onChange={(e) => onChange(e)}
+              value={phone}
+              variant='outlined'
+              required
+              fullWidth
+              id='phone'
+              label='טלפון'
+              name='phone'
+              autoComplete='phone'
+              validators={["required", "isPhoneNO"]}
+              errorMessages={["שדה חובה", "יש להכניס מספר בעל 10 ספרות"]}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextValidator
+              onChange={(e) => onChange(e)}
+              value={email}
+              variant='outlined'
+              required
+              fullWidth
+              id='email'
+              label='דואר אלקטרוני'
+              name='email'
+              autoComplete='email'
+              validators={["required", "isEmail"]}
+              errorMessages={["שדה חובה", 'יש להכניס כתובת דוא"ל תקינה']}
+            />
+          </Grid>
+        </Grid>
+        <Button
+          disabled={isSubmitted}
+          type='submit'
+          fullWidth
+          variant='contained'
+          color='primary'
+          className={classes.submit}>
+          שלח
+        </Button>
+      </ValidatorForm>
+    </Fragment>
+    // </Container>
   );
 };
 

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const Lead = require('../../models/leadModel');
+const auth = require('../../middleware/auth');
 
 // @route   POST api/lead
 // @desc    New Lead Info
@@ -50,4 +51,22 @@ router.post(
     }
   }
 );
+
+// @route   GET api/leads
+// @desc    Get all new Leads list
+// @access  Private
+
+router.get('/', async (req, res) => {
+  try {
+    const lead = await Lead.find();
+    res.status(200).json(lead);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      type: 'danger',
+      title: 'אופס',
+      content: 'משהו השתבש, אנו ממליצים לנסות שוב בקרוב'
+    });
+  }
+});
 module.exports = router;

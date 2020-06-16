@@ -13,4 +13,4 @@ export const FACEBOOK_REVIEWS = "FACEBOOK_REVIEWS";
 export const ADD_ALERT = "ADD_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 
-export const ADD_LEAD = "ADD_LEAD";
+export const GET_LEAD = "GET_LEAD";

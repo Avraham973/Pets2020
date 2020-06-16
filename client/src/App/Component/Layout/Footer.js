@@ -1,5 +1,5 @@
 /** @format */
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
@@ -11,6 +11,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 // Component
 import ContactUs from "../SharedComponent/ContactUs";
+import { Button } from "@material-ui/core";
 
 function Copyright() {
   return (
@@ -70,42 +71,31 @@ export default function AppFooter() {
   const classes = useStyles();
 
   return (
-    <ThemeProvider theme={theme}>
-      <div dir='ltr'>
-        <Typography component='footer' className={classes.root}>
-          <Container className={classes.container}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={6}>
-                <Grid
-                  container
-                  direction='column'
-                  justify='flex-end'
-                  className={classes.iconsWrapper}
-                  spacing={2}>
-                  <Grid item className={classes.icons}>
-                    <a
-                      target='_blank'
-                      href='https://www.facebook.com/kishkashta.dog.training'>
-                      <FacebookIcon fontSize='large' />
-                    </a>
-                    <a
-                      target='_blank'
-                      href='https://www.instagram.com/kishkashta.dog.training/'>
-                      <InstagramIcon fontSize='large' titleAccess='instegram' />
-                    </a>
-                  </Grid>
-                  <Grid item>
-                    <Copyright />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item xs={1} sm={2} md={3}>
-                <ContactUs />
-              </Grid>
-            </Grid>
-          </Container>
-        </Typography>
-      </div>
-    </ThemeProvider>
+    <Fragment>
+      <Grid container className={classes.root}>
+        <Grid item md={4} sm={12} className={classes.icons}>
+          <a
+            target='_blank'
+            href='https://www.facebook.com/kishkashta.dog.training'>
+            <FacebookIcon fontSize='large' />
+          </a>
+          <a
+            target='_blank'
+            href='https://www.instagram.com/kishkashta.dog.training/'>
+            <InstagramIcon fontSize='large' titleAccess='instegram' />
+          </a>
+          <br />
+          <Copyright />
+        </Grid>
+        <Grid item md={4} sm={12}>
+          middle
+        </Grid>
+        <Grid item md={4} sm={12}>
+          <Grid item md={10} sm={6}>
+            <ContactUs />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Fragment>
   );
 }
