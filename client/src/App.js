@@ -58,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 const App = ({ visibleAlert }) => {
   const classes = useStyles();
 
-  console.log(process.env.FACEBOOK_TOKEN);
   const [drawerState, setDrawerState] = useState(false);
 
   const onDrawerClicked = () => {

@@ -1,19 +1,30 @@
 /** @format */
+//https://material-table.com/#/docs/all-props
 
-import React, { Fragment } from "react";
-import MaterialTable, { MTableToolbar } from "material-table";
-import { useEffect } from "react";
-import background from "../../Assets/Img/usersList.jpg";
+import React, { useEffect } from "react";
+import MaterialTable from "material-table";
 import { MuiThemeProvider, Paper } from "@material-ui/core";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { getAllLeads } from "../../Action/leads";
+import { getAllLeads, updateLead } from "../../Action/leads";
 import { connect } from "react-redux";
-import { data } from "jquery";
+import Loading from "../SharedComponent/Loading";
 
-function LeadsTable({ getAllLeads, leads: { leads, loading } }) {
+function LeadsTable({ updateLead, getAllLeads, leads: { leads, loading } }) {
   useEffect(() => {
     getAllLeads();
   }, [getAllLeads]);
+  useEffect(() => {
+    setState((state) => ({ ...state, data: leads }));
+  }, [leads]);
+
+  const saveData = (row) => {
+    var id = row._id;
+    delete row._id;
+    updateLead(id, row);
+
+    console.log(row);
+  };
+
   const [state, setState] = React.useState({
     columns: [
       { title: "תאריך", field: "date", type: "date" },
@@ -24,28 +35,10 @@ function LeadsTable({ getAllLeads, leads: { leads, loading } }) {
       {
         title: "יצרתי קשר?",
         field: "isCallback",
-        lookup: { 0: "כן", 1: "לא" },
+        lookup: { true: "כן", false: "לא" },
       },
     ],
-
-    data: [
-      {
-        date: "17/5/2019",
-        fName: "Baran",
-        phone: "0533369004",
-        email: "Avraha@gmail.com",
-        text: "some text",
-        isCallback: 0,
-      },
-      {
-        date: "17/5/2020",
-        fName: "Baran",
-        phone: "0533369004",
-        email: "Avraha@gmail.com",
-        text: "some text",
-        isCallback: 1,
-      },
-    ],
+    data: [],
   });
 
   const theme = createMuiTheme({
@@ -53,10 +46,9 @@ function LeadsTable({ getAllLeads, leads: { leads, loading } }) {
   });
 
   return loading ? (
-    <div>loading</div>
+    <Loading />
   ) : (
     <MuiThemeProvider theme={theme}>
-      {console.log(leads)}
       <br />
       <MaterialTable
         localization={{
@@ -87,29 +79,29 @@ function LeadsTable({ getAllLeads, leads: { leads, loading } }) {
               }, 700);
             }),
           onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              saveData(newData);
+              setTimeout(() => {
+                // const dataUpdate = [...state];
+                // const index = oldData.tableData.id;
+                // dataUpdate[index] = newData;
+                //saveData(newData);
+                //setState([...dataUpdate]);
+
+                resolve();
+              }, 1000);
+            }),
+          onRowDelete: (oldData) =>
             new Promise((resolve) => {
               setTimeout(() => {
                 resolve();
-                if (oldData) {
-                  setState((prevState) => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
+                setState((prevState) => {
+                  const data = [...prevState.data];
+                  data.splice(data.indexOf(oldData), 1);
+                  return { ...prevState, data };
+                });
               }, 600);
             }),
-          // onRowDelete: (oldData) =>
-          //   new Promise((resolve) => {
-          //     setTimeout(() => {
-          //       resolve();
-          //       setState((prevState) => {
-          //         const data = [...prevState.data];
-          //         data.splice(data.indexOf(oldData), 1);
-          //         return { ...prevState, data };
-          //       });
-          //     }, 600);
-          //   }),
         }}
       />
       <br />
@@ -121,4 +113,6 @@ const mapStateToProps = (state) => ({
   leads: state.leads,
 });
 
-export default connect(mapStateToProps, { getAllLeads })(LeadsTable);
+export default connect(mapStateToProps, { getAllLeads, updateLead })(
+  LeadsTable
+);

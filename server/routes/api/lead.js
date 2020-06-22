@@ -55,11 +55,71 @@ router.post(
 // @route   GET api/leads
 // @desc    Get all new Leads list
 // @access  Private
-
 router.get('/', async (req, res) => {
   try {
     const lead = await Lead.find();
     res.status(200).json(lead);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      type: 'danger',
+      title: 'אופס',
+      content: 'משהו השתבש, אנו ממליצים לנסות שוב בקרוב'
+    });
+  }
+});
+module.exports = router;
+
+// @route   PUT api/leads/edit/:id
+// @desc    edit one lead docoment
+// @access  Private
+router.put('/edit/:id', async (req, res) => {
+  try {
+    const lead = await Lead.findOneAndUpdate(req.params.id, req.body, { new: true });
+
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/) || !lead)
+      return res.status(404).json({
+        type: 'danger',
+        title: 'אופס',
+        content: 'לא נמצא ליד לעדכון, אנא נסה לרענן את הדף ולעדכן בשנית'
+      });
+
+    res
+      .status(200)
+      .json({ lead, msg: { type: 'success', title: 'תענוג', content: '!!!הרשומה עודכנה בהצלחה' } });
+
+    // res.status(200).json({
+    // type: 'success',
+    // title: 'תענוג',
+    // content: '!!!הרשומה עודכנה בהצלחה'
+    // });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      type: 'danger',
+      title: 'אופס',
+      content: 'משהו השתבש, אנו ממליצים לנסות שוב בקרוב'
+    });
+  }
+});
+
+// @route   PUT api/leads/delete/:id
+// @desc    Delete one lead docoment
+// @access  Private
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const lead = await Lead.findByIdAndRemove(req.params.id);
+
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/) || !lead)
+      return res.status(404).json({
+        type: 'danger',
+        title: 'אופס',
+        content: 'לא נמצא ליד לעדכון, אנא וודא כי הרשומה קיימת '
+      });
+
+    res
+      .status(200)
+      .json({ msg: { type: 'success', title: 'יא מלך', content: '!!!הרשומה נמחקה בהצלחה' } });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({

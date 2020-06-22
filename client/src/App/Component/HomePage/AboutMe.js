@@ -68,7 +68,7 @@ export const AboutMe = (props) => {
   return (
     <Container spacing={2}>
       <Grid container>
-        <Grid md={6} sm={12} item className={classes.text}>
+        <Grid item md={6} sm={12} className={classes.text}>
           <Typography className={classes.title} gutterBottom variant='h2'>
             לירן בן צבי
           </Typography>
@@ -77,7 +77,7 @@ export const AboutMe = (props) => {
           </Typography>
           {aboutMe}
         </Grid>
-        <Grid md={6} sm={12} display='flex' className={classes.grid}>
+        <Grid item md={6} sm={12} display='flex' className={classes.grid}>
           <Avatar src={liran} className={classes.avatar} />
         </Grid>
       </Grid>

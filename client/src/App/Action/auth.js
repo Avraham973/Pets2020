@@ -13,13 +13,10 @@ const BASE_URL = process.env.REACT_APP_NODE_ENV;
 
 //Regester User
 
-export const register = ({
-  firstname,
-  lastname,
-  email,
-  phone,
-  password,
-}) => async (dispatch) => {
+export const register = (
+  { firstname, lastname, email, phone, password },
+  history
+) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -43,6 +40,8 @@ export const register = ({
       payload: response.data,
     });
     dispatch(showAlert(alert));
+
+    setTimeout(() => history.push("/"), 5000);
   } catch (error) {
     if (error) {
       dispatch({
@@ -54,7 +53,7 @@ export const register = ({
 };
 
 // Login User
-export const login = (email, password) => async (dispatch) => {
+export const login = (email, password, history) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -69,6 +68,7 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: response.data,
     });
+    history.push("/");
   } catch (error) {
     if (error) {
       dispatch({

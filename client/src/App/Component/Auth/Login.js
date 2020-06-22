@@ -40,13 +40,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ login, isAuth }) => {
+const Login = ({ login, isAuth, history }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    login(email, password, history);
   };
 
   const classes = useStyles();

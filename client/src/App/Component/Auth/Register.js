@@ -23,9 +23,6 @@ import {
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   backgroundImage: background,
-  // },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -49,13 +46,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({ register, showAlert }) => {
+const Register = ({ register, showAlert, history }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    register({ firstname, lastname, email, phone, password });
+    register({ firstname, lastname, email, phone, password }, history);
   };
 
   ValidatorForm.addValidationRule("isPhoneNO", (value) => {

@@ -14,3 +14,4 @@ export const ADD_ALERT = "ADD_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 
 export const GET_LEAD = "GET_LEAD";
+export const EDIT_LEAD = "EDIT_LEAD";
