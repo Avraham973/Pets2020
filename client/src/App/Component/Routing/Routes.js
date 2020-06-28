@@ -8,6 +8,7 @@ import Login from "../Auth/Login";
 import Home from "../HomePage/Home2";
 import Leads from "../Leads/leads";
 import TrainingService from "../TrainingService/TrainingService";
+import SandBox from "../SandBox/sandbox";
 
 const Routes = (props) => {
   return (
@@ -18,6 +19,7 @@ const Routes = (props) => {
         <Route exa path='/trainingservice' component={TrainingService} />
         <Route exa path='/login' component={Login} />
         <Route exa path='/leads' component={Leads} />
+        <Route exa path='/sandbox' component={SandBox} />
       </Switch>
     </section>
   );

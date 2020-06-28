@@ -86,7 +86,7 @@ router.put('/edit/:id', async (req, res) => {
 
     res
       .status(200)
-      .json({ lead, msg: { type: 'success', title: 'תענוג', content: '!!!הרשומה עודכנה בהצלחה' } });
+      .json({ lead, msg: { type: 'success', title: 'תענוג', content: 'הרשומה עודכנה בהצלחה!!!' } });
 
     // res.status(200).json({
     // type: 'success',

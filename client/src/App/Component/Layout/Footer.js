@@ -65,6 +65,11 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
   },
+  grid: {
+    padding: "1%",
+    display: "grid",
+    justifyContent: "center",
+  },
 }));
 
 export default function AppFooter() {
@@ -73,7 +78,7 @@ export default function AppFooter() {
   return (
     <Fragment>
       <Grid container className={classes.root}>
-        <Grid item md={4} sm={12} className={classes.icons}>
+        <Grid item md={4} sm={12} className={classes.grid}>
           <a
             target='_blank'
             href='https://www.facebook.com/kishkashta.dog.training'>
@@ -87,13 +92,11 @@ export default function AppFooter() {
           <br />
           <Copyright />
         </Grid>
-        <Grid item md={4} sm={12}>
+        <Grid className={classes.grid} item md={4} sm={12}>
           middle
         </Grid>
-        <Grid item md={4} sm={12}>
-          <Grid item md={10} sm={6}>
-            <ContactUs />
-          </Grid>
+        <Grid className={classes.grid} item md={4} sm={12}>
+          <ContactUs />
         </Grid>
       </Grid>
     </Fragment>
